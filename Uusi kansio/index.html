@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruotti saatana</title>
+</head>
+<body>
+<h1>Kpl 7 sanat</h1>
+<div id="wordDisplay"></div>
+<input type="text" id="userInput">
+<button onclick="checkTranslation()">Tarkista</button>
+<button onclick="displayWord()">Seuraava</button> 
+<p id="result"></p>
+
+<script>
+const wordPairs = {
+    'nordsamiska': 'pohjoissaame',
+    'pohjoissaame': 'nordsamiska',
+    'sydsamiska': 'eteläsaame',
+    'eteläsaame': 'sydsamiska',
+    'ved, veden': 'polttopuut',
+    'polttopuut, halot': 'ved',
+    'såga, sågar, sågade, sågat 1': 'sahata',
+    'sahata' : 'såga',
+    'en renskötare, renskötaren, renskötare, renskötarna 5' : 'poronhoitaja',
+    'poronhoitaja': 'en renskötare',
+    'en dator, datorn,datorer, datorerna 3' : 'tietokone',
+    'tietokone' : 'dator',
+    'är ingeting för ...' : 'eivät ole ... varten'
+
+};
+
+let currentWord = null;
+
+function getRandomWordPair() {
+    const words = Object.keys(wordPairs);
+    const index = Math.floor(Math.random() * words.length);
+    return words[index];
+}
+
+function displayWord() {
+    currentWord = getRandomWordPair();
+    document.getElementById('wordDisplay').textContent = `Translate: ${currentWord}`;
+    document.getElementById('userInput').value = '';
+    document.getElementById('result').textContent = ''; // Clear previous result
+}
+
+function checkTranslation() {
+    const userTranslation = document.getElementById('userInput').value.toLowerCase();
+    const correctTranslation = wordPairs[currentWord].toLowerCase();
+
+    const resultMessage = (userTranslation === correctTranslation) ? 'Correct!' : `Incorrect. The correct translation is: ${correctTranslation}`;
+
+    document.getElementById('result').textContent = resultMessage;
+}
+
+window.onload = displayWord;
+</script>
+</body>
+</html>
